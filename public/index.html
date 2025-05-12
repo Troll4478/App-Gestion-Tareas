@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Tareas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #btn-crear {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #007bff;
+      color: white;
+      font-size: 32px;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .modal {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 300px;
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+    }
+
+    .modal.visible {
+      display: flex;
+    }
+
+    .close-btn {
+      align-self: flex-end;
+      cursor: pointer;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    #tarea-form input, #tarea-form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .danger {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+<header>
+  <h1>Panel de Tareas</h1>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Calendario</a></li>
+    <li><a href="#">Progreso</a></li>
+    <li><a href="#">Configuración</a></li>
+  </ul>
+</nav>
+
+  <main class="kanban">
+    <section class="kanban-column" id="todo">
+      <h2>To Do</h2>
+    </section>
+    <section class="kanban-column" id="inProgress">
+      <h2>In Progress</h2>
+    </section>
+    <section class="kanban-column" id="done">
+      <h2>Done</h2>
+    </section>
+  </main>
+
+  <button id="btn-crear" title="Crear nueva tarea">+</button>
+
+  <div id="modal-tarea" class="modal">
+    <span class="close-btn">×</span>
+    <h2 id="modal-title">Crear/Editar Tarea</h2>
+    <form id="tarea-form">
+      <input type="hidden" id="tarea-id" />
+      <input type="text" id="titulo" placeholder="Título" required />
+      <textarea id="descripcion" placeholder="Descripción"></textarea>
+      <input type="date" id="fechaInicio" />
+      <input type="date" id="fechaFin" required />
+      <button type="submit">Guardar</button>
+      <button type="button" id="eliminar-tarea" class="danger hidden">Eliminar</button>
+    </form>
+  </div>
+
+  <section id="resumen">
+    <h3>Resumen de tareas completadas</h3>
+    <div id="resumen-tareas">
+      <div id="resumen-grid" class="commit-grid"></div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

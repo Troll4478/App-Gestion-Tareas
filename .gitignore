@@ -1,0 +1,46 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Entornos
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# Directorios del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos del sistema operativo
+*.swp
+*.swo
+
+# Build y cachés
+dist/
+build/
+.cache/
+.next/
+out/
+
+# Editor config
+.vscode/
+.idea/
+*.code-workspace
+
+# PWA (opcional, si generas builds con Workbox, etc.)
+workbox-*.js
+service-worker.js
+precache-manifest.*
+
+# Otros
+coverage/
+*.local
+
+# Git
+.git/
