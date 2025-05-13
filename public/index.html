@@ -6,6 +6,68 @@
   <title>Panel de Tareas</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Todo tu CSS original incluido, como antes */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #343a40;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .kanban {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px;
+    }
+
+    .kanban-column {
+      flex: 1;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 0 10px;
+    }
+
+    .kanban-column h2 {
+      text-align: center;
+      color: #007bff;
+    }
+
     #btn-crear {
       position: fixed;
       bottom: 20px;
@@ -47,7 +109,8 @@
       margin-bottom: 10px;
     }
 
-    #tarea-form input, #tarea-form textarea {
+    #tarea-form input,
+    #tarea-form textarea {
       width: 100%;
       margin-bottom: 10px;
       padding: 8px;
@@ -55,34 +118,121 @@
       border-radius: 5px;
     }
 
+    #tarea-form button {
+      width: 48%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    #tarea-form button:hover {
+      background-color: #0056b3;
+    }
+
+    #eliminar-tarea {
+      background-color: #dc3545;
+    }
+
+    #eliminar-tarea:hover {
+      background-color: #c82333;
+    }
+
     .danger {
       background-color: #dc3545;
       color: white;
     }
-  </style>
-<header>
-  <h1>Panel de Tareas</h1>
-</header>
 
-<nav>
-  <ul>
-    <li><a href="#">Inicio</a></li>
-    <li><a href="#">Calendario</a></li>
-    <li><a href="#">Progreso</a></li>
-    <li><a href="#">Configuración</a></li>
-  </ul>
-</nav>
+    #resumen {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    #resumen-tareas {
+      margin-top: 20px;
+    }
+
+    #resumen-grid {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .commit-grid {
+      display: flex;
+      gap: 10px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .calendar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .calendar-day {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: #f8f9fa;
+      color: #333;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .calendar-day:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .calendar-day.selected {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .calendar-day.completed {
+      background-color: #28a745;
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Panel de Tareas</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Calendario</a></li>
+      <li><a href="#">Progreso</a></li>
+      <li><a href="#">Configuración</a></li>
+    </ul>
+  </nav>
 
   <main class="kanban">
-    <section class="kanban-column" id="todo">
-      <h2>To Do</h2>
-    </section>
-    <section class="kanban-column" id="inProgress">
-      <h2>In Progress</h2>
-    </section>
-    <section class="kanban-column" id="done">
-      <h2>Done</h2>
-    </section>
+    <section class="kanban-column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <h2>To Do</h2>
+</section>
+
+<section class="kanban-column" id="inProgress" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <h2>In Progress</h2>
+</section>
+
+<section class="kanban-column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <h2>Done</h2>
+</section>
   </main>
 
   <button id="btn-crear" title="Crear nueva tarea">+</button>
@@ -96,6 +246,11 @@
       <textarea id="descripcion" placeholder="Descripción"></textarea>
       <input type="date" id="fechaInicio" />
       <input type="date" id="fechaFin" required />
+      <select id="estado" required>
+       <option value="todo">To Do</option>
+       <option value="inProgress">In Progress</option>
+       <option value="done">Done</option>
+      </select>
       <button type="submit">Guardar</button>
       <button type="button" id="eliminar-tarea" class="danger hidden">Eliminar</button>
     </form>
@@ -106,6 +261,10 @@
     <div id="resumen-tareas">
       <div id="resumen-grid" class="commit-grid"></div>
     </div>
+  </section>
+
+  <section class="calendar" id="calendar">
+    <!-- Calendario generado dinámicamente -->
   </section>
 
   <script src="app.js"></script>
